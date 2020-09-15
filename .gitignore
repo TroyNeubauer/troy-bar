@@ -5,4 +5,4 @@ troybar
 #Added by cargo
 
 /target
-/src/secrets
+/run.sh
