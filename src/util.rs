@@ -1,5 +1,6 @@
 
 extern crate x11;
+
 use std::ptr;
 use std::ffi::CStr;
 

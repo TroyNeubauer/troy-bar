@@ -5,3 +5,4 @@ troybar
 #Added by cargo
 
 /target
+/src/secrets
