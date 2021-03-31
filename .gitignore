@@ -1,8 +1,4 @@
-*.o
+run.sh
+target/
 troybar
 
-
-#Added by cargo
-
-/target
-/run.sh

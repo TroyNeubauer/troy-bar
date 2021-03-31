@@ -8,11 +8,14 @@ use std::{thread, time, env};
 
 
 fn main() {
-	let str_args: Vec<String> = env::args().collect();
-	if str_args.len() != 4 {
+    std::thread::sleep(time::Duration::from_millis(100));
+    let str_args: Vec<String> = env::args().collect();
+	if str_args.len() < 4 || str_args.len() > 5 {
 		println!("Expected 3 args but got {}", str_args.len());
 		panic!("USAGE: troybar latitude longitude openweathermap.org-key");
 	}
+        let use_open_weather_map = if str_args.len() == 5 { str_args[4] == "true" } else { true };
+        println!("Using open weather map: {}", use_open_weather_map);
 	let args = open_weather_map::Arguments {
 		latitude:  str_args[1].parse::<f64>().unwrap(),
 		longitude: str_args[2].parse::<f64>().unwrap(),
@@ -26,10 +29,14 @@ fn main() {
 	let mut next_sec = (Utc::now().timestamp_millis() / 1000) * 1000 + 1000;//TODO figure out how to use the time library properly so we can avoid nasty math
 	loop {
 		s.clear();
-		open_weather_map::update(&mut data, &args);
+                if use_open_weather_map {
+                    open_weather_map::update(&mut data, &args);
+                }
 
-		bar_weather(&mut s, &mut data);
-		separator(&mut s);
+                if use_open_weather_map {
+                    bar_weather(&mut s, &mut data);
+                    separator(&mut s);
+                }
 		bar_time(&mut s);
 
 		s.push_str("\0");
